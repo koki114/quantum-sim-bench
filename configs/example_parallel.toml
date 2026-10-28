@@ -1,0 +1,12 @@
+name = "qft_parallel_demo"
+backend = "numpy-cpu"
+circuit = "qft"
+qubits = [14, 16, 18]
+depth = 4
+input_value = 3
+shots = 5000
+seed = 0
+warmup = 0
+repeats = 3
+measure_memory = true
+verify = true

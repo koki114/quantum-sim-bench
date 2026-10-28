@@ -1,0 +1,4 @@
+# App dependencies plus test-only packages (pytest, qiskit for the cross-check test). ASCII only on purpose.
+-r requirements.txt
+pytest>=8
+qiskit>=1.0

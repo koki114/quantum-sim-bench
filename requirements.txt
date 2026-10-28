@@ -1,0 +1,10 @@
+# Dependencies to run the app and the CLI. ASCII only on purpose:
+# pip reads requirements files with the system locale, so non-ASCII text can break on some Windows setups.
+# Cloud deployment (e.g. Streamlit Community Cloud) uses this file, so heavy test-only packages are kept out.
+# For running the tests, install requirements-dev.txt instead.
+numpy>=1.26
+pandas>=2.0
+psutil>=5.9
+threadpoolctl>=3.1
+streamlit>=1.40
+plotly>=5.20

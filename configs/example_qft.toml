@@ -1,0 +1,12 @@
+name = "qft_scaling"
+backend = "numpy-cpu"
+circuit = "qft"
+qubits = [4, 8, 12, 16, 18, 20]
+depth = 4
+input_value = 3
+shots = 10000
+seed = 0
+warmup = 1
+repeats = 5
+measure_memory = true
+verify = true

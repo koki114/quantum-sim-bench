@@ -1,0 +1,12 @@
+name = "qft_sweep"
+backend = "numpy-cpu"
+circuit = "qft"
+qubits = [16, 18]
+depth = 4
+input_value = 3
+shots = 5000
+seed = 0
+warmup = 1
+repeats = 3
+measure_memory = true
+verify = true

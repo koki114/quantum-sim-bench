@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+jobs/
+jobs_demo*/
+sweeps/
+.venv-clean/
+results/

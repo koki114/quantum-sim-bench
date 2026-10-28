@@ -1,0 +1,12 @@
+name = "ghz_small"
+backend = "numpy-cpu"
+circuit = "ghz"
+qubits = [4, 8, 12, 16]
+depth = 4
+input_value = 0
+shots = 10000
+seed = 0
+warmup = 1
+repeats = 5
+measure_memory = true
+verify = true

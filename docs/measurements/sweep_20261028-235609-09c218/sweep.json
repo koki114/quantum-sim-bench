@@ -1,0 +1,202 @@
+{
+  "started_at": "2026-10-28T23:56:09",
+  "status": "finished",
+  "config": {
+    "name": "qft_sweep",
+    "backend": "numpy-cpu",
+    "circuit": "qft",
+    "qubits": [
+      16,
+      18
+    ],
+    "depth": 4,
+    "input_value": 3,
+    "shots": 5000,
+    "seed": 0,
+    "warmup": 1,
+    "repeats": 3,
+    "measure_memory": true,
+    "verify": true
+  },
+  "config_digest": "1ae1a213359c",
+  "sweep_seed": 0,
+  "jobs_per_condition": 4,
+  "rounds": 3,
+  "logical_cores": 8,
+  "physical_cores": 4,
+  "conditions": [
+    {
+      "workers": 1,
+      "threads": 1
+    },
+    {
+      "workers": 1,
+      "threads": 2
+    },
+    {
+      "workers": 1,
+      "threads": 4
+    },
+    {
+      "workers": 2,
+      "threads": 1
+    },
+    {
+      "workers": 2,
+      "threads": 2
+    },
+    {
+      "workers": 2,
+      "threads": 4
+    },
+    {
+      "workers": 4,
+      "threads": 1
+    },
+    {
+      "workers": 4,
+      "threads": 2
+    }
+  ],
+  "skipped_conditions": [
+    {
+      "workers": 4,
+      "threads": 4,
+      "reason": "workers*threads=16 > logical cores 8"
+    }
+  ],
+  "oversubscribed_conditions": [],
+  "order_per_round": [
+    [
+      {
+        "workers": 2,
+        "threads": 2
+      },
+      {
+        "workers": 1,
+        "threads": 2
+      },
+      {
+        "workers": 2,
+        "threads": 4
+      },
+      {
+        "workers": 1,
+        "threads": 4
+      },
+      {
+        "workers": 1,
+        "threads": 1
+      },
+      {
+        "workers": 2,
+        "threads": 1
+      },
+      {
+        "workers": 4,
+        "threads": 2
+      },
+      {
+        "workers": 4,
+        "threads": 1
+      }
+    ],
+    [
+      {
+        "workers": 2,
+        "threads": 1
+      },
+      {
+        "workers": 4,
+        "threads": 1
+      },
+      {
+        "workers": 1,
+        "threads": 2
+      },
+      {
+        "workers": 2,
+        "threads": 4
+      },
+      {
+        "workers": 4,
+        "threads": 2
+      },
+      {
+        "workers": 1,
+        "threads": 1
+      },
+      {
+        "workers": 2,
+        "threads": 2
+      },
+      {
+        "workers": 1,
+        "threads": 4
+      }
+    ],
+    [
+      {
+        "workers": 2,
+        "threads": 4
+      },
+      {
+        "workers": 2,
+        "threads": 1
+      },
+      {
+        "workers": 2,
+        "threads": 2
+      },
+      {
+        "workers": 1,
+        "threads": 2
+      },
+      {
+        "workers": 1,
+        "threads": 4
+      },
+      {
+        "workers": 4,
+        "threads": 1
+      },
+      {
+        "workers": 4,
+        "threads": 2
+      },
+      {
+        "workers": 1,
+        "threads": 1
+      }
+    ]
+  ],
+  "environment": {
+    "platform": "Windows-10-10.0.22631-SP0",
+    "python": "3.11.0",
+    "numpy": "2.4.6",
+    "cpu": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+    "cpu_logical_cores": 8,
+    "ram_total_gib": 7.9,
+    "ram_available_gib_at_start": 0.34,
+    "execution_device": "CPU (NumPy)",
+    "gpu_used": false,
+    "blas": [
+      {
+        "user_api": "blas",
+        "internal_api": "openblas",
+        "version": "0.3.31.188.0",
+        "num_threads": 8,
+        "threading_layer": "pthreads"
+      }
+    ],
+    "blas_env": {
+      "OMP_NUM_THREADS": null,
+      "OPENBLAS_NUM_THREADS": null,
+      "MKL_NUM_THREADS": null
+    },
+    "memory_method": "tracemalloc peak (Python/NumPy allocations only; not process RSS)"
+  },
+  "note": "workers*threads の制限は今回の測定における保守的な設定であり、超過が常に遅いことを意味しない",
+  "finished_at": "2026-10-29T00:06:44",
+  "total_wall_s": 634.8087235999999
+}
