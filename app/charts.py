@@ -40,7 +40,9 @@ def time_chart(df):
                     line_color=BLUE, marker_symbol="circle", error_y=dict(type="data", array=df["time_std_s"]))
     fig.add_scatter(x=df["qubits"], y=df["time_median_s"], mode="markers", name="中央値",
                     marker=dict(color=ORANGE, symbol="diamond", size=9))
-    return _layout(fig, "回路規模と回路の計算時間(実測)", "量子ビット数 n", "秒(対数軸)", yaxis_type="log")
+    fig = _layout(fig, "回路規模と回路の計算時間(実測)", "量子ビット数 n", "秒(対数軸)", yaxis_type="log")
+    fig.update_yaxes(dtick=1, exponentformat="power")  # 目盛りを 10 のべき乗だけにして読みやすくする
+    return fig
 
 
 def memory_chart(df):
@@ -50,7 +52,9 @@ def memory_chart(df):
     fig.add_scatter(x=df["qubits"], y=df["statevector_bytes_theory"], mode="lines+markers",
                     name="理論値 16·2ⁿ バイト(状態ベクトル本体)", line=dict(color=GRAY, dash="dash"),
                     marker_symbol="square")
-    return _layout(fig, "メモリ使用量: 実測と理論値", "量子ビット数 n", "バイト(対数軸)", yaxis_type="log")
+    fig = _layout(fig, "メモリ使用量: 実測と理論値", "量子ビット数 n", "バイト(対数軸)", yaxis_type="log")
+    fig.update_yaxes(dtick=1, exponentformat="power")
+    return fig
 
 
 def cv_chart(df):
@@ -64,10 +68,12 @@ def memory_scaling_chart(ns, bytes_theory, ram_bytes, max_qubits):
     fig.add_scatter(x=list(ns), y=list(bytes_theory), mode="lines+markers", name="状態ベクトル本体の理論メモリ",
                     line_color=BLUE, marker_symbol="circle")
     fig.add_hline(y=ram_bytes, line_dash="dash", line_color=GRAY,
-                  annotation_text="このPCの搭載メモリ(参考)", annotation_position="top left")
+                  annotation_text="実行環境の搭載メモリ(参考)", annotation_position="top left")
     fig.add_vline(x=max_qubits, line_dash="dot", line_color=ORANGE,
                   annotation_text=f"このアプリの上限 n={max_qubits}", annotation_position="bottom right")
-    return _layout(fig, "量子ビット数とメモリ(理論値)", "量子ビット数 n", "バイト(対数軸)", yaxis_type="log")
+    fig = _layout(fig, "量子ビット数とメモリ(理論値)", "量子ビット数 n", "バイト(対数軸)", yaxis_type="log")
+    fig.update_yaxes(dtick=2, exponentformat="power")
+    return fig
 
 
 def sweep_wall_chart(summary):

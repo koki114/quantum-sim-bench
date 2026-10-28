@@ -121,7 +121,7 @@ def show_simulation(res: dict, prefix: str) -> None:
     st.markdown(
         f"- 「測定頻度」は {res['shots']:,} 回のくじ引きの結果なので、理論確率とは少しずれます"
         f"(全変動距離 TVD = {row['tvd_sampling_vs_sim']:.4f}。有限回数での目安は約 {row['tvd_expected_scale_theory']:.4f})。\n"
-        "- 時間は**この PC の CPU での実測**で、GPU の性能を示すものではありません。小さい n では時間がほぼ「Python の準備時間」です。")
+        "- 時間は**このアプリを動かしているコンピュータの CPU での実測**です(公開版ではクラウドの共有 CPU)。GPU の性能を示すものではありません。小さい n では時間がほぼ「Python の準備時間」です。")
     st.markdown("#### 5. 次に試すとよい操作")
     st.markdown("- 量子ビット数 n を 1 つ増やして、振幅の数・理論メモリ・時間がどう変わるか見る(→「② 規模とコスト」)。\n"
                 "- 別の回路に切り替えて、確率の形を比べる。\n- 性能をきちんと比べたいときは「③ 性能測定」へ。")
@@ -156,7 +156,7 @@ with tabs[0]:
     with st.expander("このアプリの範囲と制約"):
         st.markdown(C.SCOPE_NOTE)
     with st.expander("色と記号の見方"):
-        st.markdown("🟢 **実測** … このコンピュータで実際に測った値 / 🔵 **理論値** … 式から計算した値 / "
+        st.markdown("🟢 **実測** … このアプリを動かしているコンピュータで実際に測った値 / 🔵 **理論値** … 式から計算した値 / "
                     "🟠 **推定** … 実測から見積もった値で、保証はない。グラフは色に加えて、線種・マーカー・模様でも区別しています。")
 
 # ---- ① 回路を試す
@@ -209,7 +209,7 @@ with tabs[2]:
     c1, c2, c3 = st.columns(3)
     c1.metric("振幅の数 2ⁿ", f"{2**n_cost:,}")
     c2.metric("🔵 理論メモリ 16×2ⁿ バイト", explain.format_bytes(sv.statevector_bytes(n_cost)))
-    c3.metric("このPCの搭載メモリ(参考)", explain.format_bytes(psutil.virtual_memory().total))
+    c3.metric("実行環境の搭載メモリ(参考。公開版ではクラウドのサーバー)", explain.format_bytes(psutil.virtual_memory().total))
     st.latex(C.LATEX["amplitudes"])
     st.latex(C.LATEX["memory"])
     st.markdown("振幅 1 個は倍精度の複素数で 16 バイトです(実部 8 + 虚部 8)。単位は 1024 を基準とする KiB・MiB・GiB です。")
@@ -300,7 +300,7 @@ with tabs[3]:
             for line in explain.benchmark_reading(ok):
                 st.markdown(f"- {line}")
             st.markdown("#### 4. 注意点")
-            st.markdown("- 時間はこの PC・この時点の値です。他のアプリの動作や CPU の発熱で変わります。別の PC や GPU には当てはまりません。\n"
+            st.markdown("- 時間は、このアプリを動かしているコンピュータ(公開版ではクラウドの共有 CPU)の、この時点の値です。他のアプリの動作や CPU の発熱で変わります。別の PC や GPU には当てはまりません。\n"
                         "- メモリの実測は `tracemalloc`(Python/NumPy の確保量のピーク)で、OS から見たプロセス全体の使用量ではありません。\n"
                         "- 小さい n では時間が Python の準備時間に支配され、n に対して増えません。")
             st.markdown("#### 5. 次に試すとよい操作")
@@ -355,7 +355,7 @@ with tabs[4]:
             st.markdown(f"- {line}")
         st.markdown("#### 言えること・言えないこと")
         st.markdown(
-            "- ✅ この PC・この負荷では、ワーカー数を増やすと壁時計時間は短くなりました(ただし 1 ジョブあたりの計算時間は伸びています)。\n"
+            "- ✅ 測定した PC(作者のノート PC)・この負荷では、ワーカー数を増やすと壁時計時間は短くなりました(ただし 1 ジョブあたりの計算時間は伸びています)。\n"
             "- ✅ スレッド数の設定は、全ジョブで実際に適用されたことを確認済みです(要求値と `threadpoolctl` の検出値が一致)。\n"
             "- ❌ スレッド数の効果は、ばらつきの範囲内で、有無を断定できません。\n"
             "- ❌ 遅くなる原因(メモリ帯域・ハイパースレッディング・CPU 周波数など)は切り分けていません。\n"

@@ -235,7 +235,13 @@ def test_readme_glossary_in_sync_with_app_content():
 
 def test_readme_honesty_statements_present():
     readme = (Path(__file__).resolve().parents[1] / "README.md").read_text(encoding="utf-8")
-    assert "GPU は使用していません" in readme and "未取得" in readme  # スクリーンショットは撮影されるまで掲載しない
+    assert "GPU は使用していません" in readme
+    import re as _re
+    shots = _re.findall(r"\]\((docs/screenshots/[^)]+\.png)\)", readme)
+    assert len(shots) >= 5  # 掲載している画像は、すべて実在するファイル(リンク切れなし)
+    for rel in shots:
+        head = (Path(__file__).resolve().parents[1] / rel).read_bytes()[:4]
+        assert head == bytes([137]) + b"PNG", rel  # PNG signature
     assert "https://quantum-sim-bench-rm5zlvzcacm43umvgc9quk.streamlit.app/" in readme and "MIT" in readme
     assert "start_app.bat" in readme and "requirements-dev.txt" in readme
 
@@ -266,3 +272,20 @@ def test_glossary_additions_present():
               "論理コア・物理コア", "tracemalloc", "解析解", "TVD（全変動距離）", "KiB・MiB・GiB", "一時配列"):
         assert t in content.GLOSSARY, t
     assert len(content.GLOSSARY) >= 40
+
+
+def test_top_outcomes_ties_ordered_by_bitstring_index():
+    """回帰テスト: 同じ確率(GHZ の 000 と 111)は番号の小さい順 = 000 が先(公開画面では 111 が先だった)。"""
+    p = sv.probabilities(sv.simulate(circuits.ghz(3)))
+    assert explain.top_outcomes(p, 8).tolist() == [0, 7]
+
+
+def test_no_environment_ambiguous_pc_wording_in_ui():
+    src = (APP_DIR / "streamlit_app.py").read_text(encoding="utf-8") + (APP_DIR / "charts.py").read_text(encoding="utf-8")
+    assert "このPCの搭載メモリ" not in src  # 公開版ではクラウドのサーバー。作者の PC と誤解させない
+
+
+def test_log_axis_ticks_are_powers_of_ten():
+    df = make_bench_df()
+    ax = charts.time_chart(df).layout.yaxis
+    assert ax.type == "log" and ax.dtick == 1 and ax.exponentformat == "power"

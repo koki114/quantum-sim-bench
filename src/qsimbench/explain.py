@@ -74,8 +74,8 @@ def validate_circuit_inputs(kind: str, n: int, input_value: int, depth: int) -> 
 
 
 def top_outcomes(probs: np.ndarray, k: int = 32) -> np.ndarray:
-    """確率が高い順の基底状態インデックス(確率がほぼ 0 のものは除く)。"""
-    idx = np.argsort(probs)[::-1][:k]
+    """確率が高い順の基底状態インデックス(確率がほぼ 0 のものは除く)。同じ確率なら番号の小さい順。"""
+    idx = np.lexsort((np.arange(len(probs)), -np.round(probs, 12)))[:k]
     return idx[probs[idx] > 1e-12]
 
 
