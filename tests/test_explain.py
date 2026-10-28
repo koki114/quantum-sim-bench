@@ -235,7 +235,8 @@ def test_readme_glossary_in_sync_with_app_content():
 
 def test_readme_honesty_statements_present():
     readme = (Path(__file__).resolve().parents[1] / "README.md").read_text(encoding="utf-8")
-    assert "GPU は使用していません" in readme and "未公開" in readme and "未取得" in readme
+    assert "GPU は使用していません" in readme and "未取得" in readme  # スクリーンショットは撮影されるまで掲載しない
+    assert "https://quantum-sim-bench-rm5zlvzcacm43umvgc9quk.streamlit.app/" in readme and "MIT" in readme
     assert "start_app.bat" in readme and "requirements-dev.txt" in readme
 
 
