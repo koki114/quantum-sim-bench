@@ -165,7 +165,7 @@ def test_sweep_outputs_and_metadata(tiny_sweep):
     r = pd.read_csv(out / "rounds.csv")
     assert len(r) == 4 and (r.failed == 0).all() and set(r.thread_status) == {"ok"}
     assert {"wall_s", "job_process_s_median", "job_in_execute_s_median", "circuit_nmax_s_median"} <= set(r)
-    # 壁時計 ≥ ジョブ(プロセス込み) ≥ execute 内 ≥ 回路時間: 区別された量が整合している
+    # 経過時間 ≥ ジョブ(プロセス込み) ≥ execute 内 ≥ 回路時間: 区別された量が整合している
     assert (r.job_in_execute_s_median <= r.job_process_s_median).all()
     assert (r.circuit_nmax_s_median <= r.job_in_execute_s_median).all()
     assert (r.job_process_s_median <= r.wall_s + 1e-6).all()

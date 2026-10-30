@@ -77,7 +77,7 @@ def memory_scaling_chart(ns, bytes_theory, ram_bytes, max_qubits):
 
 
 def sweep_wall_chart(summary):
-    """workers ごとに、threads 別の壁時計時間の中央値と最小〜最大の範囲。"""
+    """workers ごとに、threads 別の経過時間の中央値と最小〜最大の範囲。"""
     fig = go.Figure()
     for k, (t, g) in enumerate(summary.groupby("threads")):
         g = g.sort_values("workers")
@@ -85,7 +85,7 @@ def sweep_wall_chart(summary):
                         marker_symbol=SYMBOLS[k % 4],
                         error_y=dict(type="data", symmetric=False, array=g["wall_s_max"] - g["wall_s_median"],
                                      arrayminus=g["wall_s_median"] - g["wall_s_min"]))
-    return _layout(fig, "4 ジョブ全体の壁時計時間(中央値、線=最小〜最大、3 ラウンド)", "ワーカー数", "秒",
+    return _layout(fig, "4 ジョブ全体の経過時間(中央値、線=最小〜最大、3 ラウンド)", "ワーカー数", "秒",
                    xaxis=dict(tickvals=sorted(summary["workers"].unique())))
 
 

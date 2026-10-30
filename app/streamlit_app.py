@@ -342,20 +342,20 @@ with tabs[4]:
         show_plot(charts.sweep_job_chart(s, nmax), "sweep_job", g2)
         st.markdown("左: **スループット**(まとめて終わるまでの時間)。右: **1 ジョブあたり**の計算時間。この 2 つは別の量です。")
         st.dataframe(s.rename(columns={
-            "workers": "ワーカー数", "threads": "スレッド数", "rounds": "ラウンド数", "wall_s_median": "壁時計 中央値[s]",
-            "wall_s_min": "壁時計 最小[s]", "wall_s_max": "壁時計 最大[s]", "wall_s_cv": "壁時計 変動係数",
+            "workers": "ワーカー数", "threads": "スレッド数", "rounds": "ラウンド数", "wall_s_median": "経過時間 中央値[s]",
+            "wall_s_min": "経過時間 最小[s]", "wall_s_max": "経過時間 最大[s]", "wall_s_cv": "経過時間 変動係数",
             "circuit_nmax_s_median_of_rounds": f"回路時間 n={nmax} 中央値[s]",
-            "wall_speedup_median_vs_baseline": "壁時計の短縮率(対 1×1)",
+            "wall_speedup_median_vs_baseline": "経過時間の短縮率(対 1×1)",
             "wall_range_overlaps_baseline": "範囲が 1×1 と重なる"})[
-            ["ワーカー数", "スレッド数", "ラウンド数", "壁時計 中央値[s]", "壁時計 最小[s]", "壁時計 最大[s]",
-             "壁時計 変動係数", f"回路時間 n={nmax} 中央値[s]", "壁時計の短縮率(対 1×1)", "範囲が 1×1 と重なる"]],
+            ["ワーカー数", "スレッド数", "ラウンド数", "経過時間 中央値[s]", "経過時間 最小[s]", "経過時間 最大[s]",
+             "経過時間 変動係数", f"回路時間 n={nmax} 中央値[s]", "経過時間の短縮率(対 1×1)", "範囲が 1×1 と重なる"]],
             hide_index=True)
         st.markdown("#### 結果の読み方")
         for line in explain.sweep_reading(s, nmax):
             st.markdown(f"- {line}")
         st.markdown("#### 言えること・言えないこと")
         st.markdown(
-            "- ✅ 測定した PC(作者のノート PC)・この負荷では、ワーカー数を増やすと壁時計時間は短くなりました(ただし 1 ジョブあたりの計算時間は伸びています)。\n"
+            "- ✅ 測定した PC・この負荷では、ワーカー数を増やすと経過時間は短くなりました(ただし 1 ジョブあたりの計算時間は伸びています)。\n"
             "- ✅ スレッド数の設定は、全ジョブで実際に適用されたことを確認済みです(要求値と `threadpoolctl` の検出値が一致)。\n"
             "- ❌ スレッド数の効果は、ばらつきの範囲内で、有無を断定できません。\n"
             "- ❌ 遅くなる原因(メモリ帯域・ハイパースレッディング・CPU 周波数など)は切り分けていません。\n"

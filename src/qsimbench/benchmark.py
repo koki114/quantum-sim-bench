@@ -18,7 +18,7 @@ from . import threads
 
 
 def measure_time(fn: Callable[[], object], warmup: int, repeats: int) -> dict:
-    """warmup 回は捨て、repeats 回の壁時計時間(秒)を記録する。"""
+    """warmup 回は捨て、repeats 回の経過時間(秒)を記録する。"""
     if repeats < 1:
         raise ValueError("repeats must be >= 1")
     for _ in range(warmup):
@@ -84,7 +84,7 @@ def process_resources() -> dict:
     """自プロセスのOS視点の資源使用量。取得できない項目は None(未計測)。
 
     peak_rss_bytes: Windows は peak_wset、Linux は ru_maxrss。どちらも取れなければ None。
-    cpu_time_s: user+system の累積CPU秒(壁時計時間ではない)。
+    cpu_time_s: user+system の累積CPU秒(経過時間ではない)。
     """
     p = psutil.Process()
     ct = p.cpu_times()

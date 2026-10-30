@@ -4,7 +4,7 @@
 時間経過(発熱・他プロセス)の影響が特定条件に偏らないようにする。
 結果は ``out/<日時>-<hex>/`` に新規作成する(既存は上書きしない):
   sweep.json   計画・seed・実行順・スキップ条件・環境・設定
-  rounds.csv   条件×ラウンドごとの1行(壁時計時間とジョブ内時間を別列で記録)
+  rounds.csv   条件×ラウンドごとの1行(経過時間とジョブ内時間を別列で記録)
   summary.csv  条件ごとの集計(中央値・最小・最大・標準偏差・変動係数)。「最適」判定は行わない
   jobs/        各ジョブの記録(通常のジョブキューと同じ形式)
 """
@@ -125,7 +125,7 @@ def _condition_row(jobs_root: Path, jobs: list[dict], s: dict, cfg: ExperimentCo
     applied = sorted({thr.blas_threads_summary(i) or "null" for i in infos})
     return {
         "failed": len(jobs) - len(ok),
-        # 壁時計時間: バッチ全体(ジョブ登録後〜全ジョブ終了)。ジョブ間の並列を含む
+        # 経過時間: バッチ全体(ジョブ登録後〜全ジョブ終了)。ジョブ間の並列を含む
         "wall_s": s["wall_time_s"],
         # プロセス起動(Python/NumPy の import 等)を含むジョブ1件の時間
         **_stats([j["duration_s"] for j in ok], "job_process_s"),

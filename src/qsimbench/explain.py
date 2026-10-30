@@ -157,7 +157,7 @@ def sweep_reading(s: pd.DataFrame, nmax: int) -> list[str]:
         base = t1.iloc[0]
         for _, row in t1.iloc[1:].iterrows():
             lines.append(
-                f"スレッド数 1 で、ワーカーを {int(base['workers'])}→{int(row['workers'])} にすると、壁時計時間(中央値)は "
+                f"スレッド数 1 で、ワーカーを {int(base['workers'])}→{int(row['workers'])} にすると、経過時間(中央値)は "
                 f"{base['wall_s_median']:.1f}→{row['wall_s_median']:.1f} 秒(約 {base['wall_s_median'] / row['wall_s_median']:.2f} 倍速)。"
                 f"一方、1 ジョブあたりの回路時間(n={nmax})は {base['circuit_nmax_s_median_of_rounds']:.2f}→"
                 f"{row['circuit_nmax_s_median_of_rounds']:.2f} 秒(約 "
@@ -167,8 +167,8 @@ def sweep_reading(s: pd.DataFrame, nmax: int) -> list[str]:
         lo, hi = w0["wall_s_min"].max(), w0["wall_s_max"].min()
         overlap = "すべての範囲が重なっており、差を断定できません" if lo <= hi else "範囲が重ならない組がありました"
         lines.append(f"ワーカー {int(w0['workers'].iloc[0])} でスレッド数を {int(w0['threads'].iloc[0])}→{int(w0['threads'].iloc[-1])} と"
-                     f"変えたときの壁時計時間(中央値)は {w0['wall_s_median'].min():.1f}〜{w0['wall_s_median'].max():.1f} 秒で、{overlap}。")
+                     f"変えたときの経過時間(中央値)は {w0['wall_s_median'].min():.1f}〜{w0['wall_s_median'].max():.1f} 秒で、{overlap}。")
     worst = s.loc[s["wall_s_cv"].idxmax()]
-    lines.append(f"壁時計時間のばらつきが最も大きかったのは、ワーカー {int(worst['workers'])}・スレッド {int(worst['threads'])} の条件"
+    lines.append(f"経過時間のばらつきが最も大きかったのは、ワーカー {int(worst['workers'])}・スレッド {int(worst['threads'])} の条件"
                  f"(変動係数 {worst['wall_s_cv'] * 100:.0f}%)です。外れ値を含む 3 ラウンドの結果なので、この条件が不安定だとは断定できません。")
     return lines
